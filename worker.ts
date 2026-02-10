@@ -18,13 +18,18 @@ export default {
     });
 
     // Return response with caching
-    return new Response(response.body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: {
-        "Cache-Control": "public, max-age=30, s-maxage=30",
-        "Content-Type": response.headers.get("Content-Type") ?? "application/xml"
-      }
-    });
+return new Response(response.body, {
+  status: response.status,
+  headers: {
+    "Content-Type": response.headers.get("Content-Type") ?? "application/xml",
+    "Cache-Control": "public, max-age=30, s-maxage=30",
+
+    // REQUIRED FOR LOCAL DEV
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET",
+    "Access-Control-Allow-Headers": "Content-Type"
+  }
+});
+
   }
 };
